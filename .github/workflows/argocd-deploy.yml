@@ -1,0 +1,28 @@
+name: Deploy ArgCD for TKE
+
+on:
+  push:
+    branches: [ "prod","test","dev" ]
+permissions:
+  contents: read
+jobs:
+  install-argocd-to-tke-cluster:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: set k8s access token
+        uses: tale/kubectl-action@v1
+        with:
+          base64-kube-config: ${{ secrets.DEV_K8S_ACCESS_KUBECONFIG }}
+          kubectl-version: v1.32.2
+      - name: Install ArgoCD For Prod
+        if: ${{ github.ref == 'refs/heads/prod' && github.event.workflow_run.conclusion == 'success' }}
+        env:
+          KUBECONFIG_DATA: ${{ secrets.DEV_K8S_ACCESS_KUBECONFIG  }}
+        run: |
+          mkdir -p $HOME/.kube
+          echo "$KUBECONFIG_DATA"  > $HOME/.kube/config
+          ARGOCD_NS=argocd-prod  envsubst < ns.yaml| kubectl apply  -f -
+          ARGOCD_NS=argocd-prod ARGOCD_IMAGE=${{vars.ARGOCD_IMAGE}} DEX_IAGE=${{vars.DEX_IAGE}} REDIS_IMAGE=${{vars.REDIS_IMAGE}}  envsubst < install.yaml |kubectl apply -n argocd-prod  -f -
+          ARGOCD_NS=argocd-prod ARGOCD_IMAGE=${{vars.ARGOCD_IMAGE}} DEX_IAGE=${{vars.DEX_IAGE}} REDIS_IMAGE=${{vars.REDIS_IMAGE}}  envsubst < install.yaml |kubectl get  -n argocd-prod  -f -

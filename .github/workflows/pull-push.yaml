@@ -1,0 +1,30 @@
+name: 将镜像上传到个人私有镜像仓库
+
+on:
+  workflow_dispatch:
+    inputs:
+      oldimage_name:
+        description: '旧镜像名称'
+      imges_url:
+        description: '镜像仓库'
+        default: 'mipm-ten-1-prod-sh-net-tcr-cfa-tcr-prod.tencentcloudcr.com'
+      server_name:
+        description: '服务名称'
+        default: 'public'
+        type: choice
+        options:
+          - public
+      tag_name:
+        description: '镜像tag'
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: pull_push
+        if: ${{ github.ref == 'refs/heads/prod' }}
+        run: |
+          make process-images OLD_IMAGES=${{github.event.inputs.oldimage_name}} DOCKER_HUP_SERVER=${{var.PROD_DOCKER_HUP_SERVER}} SERVER_NAME=${{github.event.inputs.server_name}}"
