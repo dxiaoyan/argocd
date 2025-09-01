@@ -27,4 +27,4 @@ jobs:
       - name: pull_push
         if: ${{ github.ref == 'refs/heads/prod' }}
         run: |
-          make process-images OLD_IMAGES=${{github.event.inputs.oldimage_name}} DOCKER_HUP_SERVER=${{var.PROD_DOCKER_HUP_SERVER}} SERVER_NAME=${{github.event.inputs.server_name}}"
+          make process-images OLD_IMAGES=${{github.event.inputs.oldimage_name}} DOCKER_HUP_SERVER=${{var.PROD_DOCKER_HUP_SERVER}} SERVER_NAME=${{github.event.inputs.server_name}}
