@@ -14,8 +14,8 @@ on:
         type: choice
         options:
           - public
-      tag_name:
-        description: '镜像tag'
+#      tag_name:
+#        description: '镜像tag'
 
 
 jobs:
