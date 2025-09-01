@@ -13,7 +13,7 @@ on:
         default: 'mipm-ten-1-prod-sh-net-tcrn-devops-public'
         type: choice
         options:
-          - public
+          - "mipm-ten-1-prod-sh-net-tcrn-devops-public"
 #      tag_name:
 #        description: '镜像tag'
 
