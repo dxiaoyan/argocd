@@ -9,8 +9,8 @@ TAG_NAME ?=
 
 # 批量处理镜像的目标
 process-images:
-	@docker login ${DOCKER_HUP_SERVER} --username ${DOCKER_HUP_USERNAME} --password ${DOCKER_HUP_PASSWORD}
-	@if [ -z "$(OLD_IMAGES)" ] || [ -z "$(DOCKER_HUP_SERVER)" ] || [ -z "$(SERVER_NAME)" ] ; then \
+	@sudo docker login ${DOCKER_HUP_SERVER} --username ${DOCKER_HUP_USERNAME} --password ${DOCKER_HUP_PASSWORD}
+	@sudo if [ -z "$(OLD_IMAGES)" ] || [ -z "$(DOCKER_HUP_SERVER)" ] || [ -z "$(SERVER_NAME)" ] ; then \
 		echo "错误：请指定必要参数，例如："; \
 		echo "make process-images OLD_IMAGES='镜像1 镜像2' DOCKER_HUP_SERVER=仓库地址 SERVER_NAME=服务名"; \
 		exit 1; \
@@ -24,7 +24,7 @@ process-images:
     		docker pull $$old_img; \
     		\
     		# 从原始镜像中提取名称和标签（处理无标签的情况，默认latest） \
-    		image_name=$$(echo "$$old_img" | cut -d':' -f1); \
+    		image_name=$$(echo "$$old_img" | cut -d':' -f1 | rev | cut -d '/' -f 1 | rev); \
     		image_tag=$$(echo "$$old_img" | cut -d':' -f2-); \
     		if [ -z "$$image_tag" ]; then image_tag="latest"; fi; \
     		\
