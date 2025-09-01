@@ -1,7 +1,7 @@
 BRANCH=main
 #DOCKER_HUP_REPO=$(BRANCH)/${APP_NAME}
-DOCKER_HUP_SERVER=mipm-ten-0-dev-sh-net-tcr-cfa-tcr-nonprod.tencentcloudcr.com
-DOCKER_HUP_USERNAME=100030639741
+DOCKER_HUP_SERVER=
+DOCKER_HUP_USERNAME=
 DOCKER_HUP_PASSWORD=
 OLD_IMAGES ?=
 SERVER_NAME = public
@@ -9,7 +9,7 @@ TAG_NAME ?=
 
 # 批量处理镜像的目标
 process-images:
-	docker login ${DOCKER_HUP_SERVER} --username ${DOCKER_HUP_USERNAME} --password ${DOCKER_HUP_PASSWORD}
+	@docker login ${DOCKER_HUP_SERVER} --username ${DOCKER_HUP_USERNAME} --password ${DOCKER_HUP_PASSWORD}
 	@if [ -z "$(OLD_IMAGES)" ] || [ -z "$(DOCKER_HUP_SERVER)" ] || [ -z "$(SERVER_NAME)" ] ; then \
 		echo "错误：请指定必要参数，例如："; \
 		echo "make process-images OLD_IMAGES='镜像1 镜像2' DOCKER_HUP_SERVER=仓库地址 SERVER_NAME=服务名"; \
