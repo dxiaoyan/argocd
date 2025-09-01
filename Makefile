@@ -28,7 +28,7 @@ process-images:
     		if [ -z "$$image_tag" ]; then image_tag="latest"; fi; \
     		\
     		# 定义新镜像标签（格式：原始名称-原始tag） \
-    		new_img="$(DOCKER_HUP_SERVER)/$(SERVER_NAME):$$image_name-$$image_tag"; \
+    		new_img="$(DOCKER_HUP_SERVER)/$(SERVER_NAME)/$$image_name:$$image_tag"; \
     		\
     		# 为镜像打新标签 \
     		docker tag $$old_img $$new_img; \
