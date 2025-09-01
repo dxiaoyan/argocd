@@ -37,8 +37,6 @@ process-images:
     		echo "生成的新镜像: $$new_img"; \
     		\
     		# 推送新镜像到仓库 \
-    		docker push $$new_img; \
-    		\
-    		echo "镜像 $$old_img 处理完成"; \
+    		docker push $$new_img && echo "镜像 $$old_img 处理完成"||exit 1 \
     		echo "----------------------------------------"; \
     	done
