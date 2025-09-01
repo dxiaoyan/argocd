@@ -10,7 +10,7 @@ on:
         default: 'mipm-ten-1-prod-sh-net-tcr-cfa-tcr-prod.tencentcloudcr.com'
       server_name:
         description: '服务名称'
-        default: 'public'
+        default: 'mipm-ten-1-prod-sh-net-tcrn-devops-public'
         type: choice
         options:
           - public
