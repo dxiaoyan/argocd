@@ -9,14 +9,14 @@ TAG_NAME ?=
 
 # 批量处理镜像的目标
 process-images:
-	@sudo if [ -z "$(OLD_IMAGES)" ] || [ -z "$(DOCKER_HUP_SERVER)" ] || [ -z "$(SERVER_NAME)" ] ; then \
+	@if [ -z "$(OLD_IMAGES)" ] || [ -z "$(DOCKER_HUP_SERVER)" ] || [ -z "$(SERVER_NAME)" ] ; then \
 		echo "错误：请指定必要参数，例如："; \
 		echo "make process-images OLD_IMAGES='镜像1 镜像2' DOCKER_HUP_SERVER=仓库地址 SERVER_NAME=服务名"; \
 		exit 1; \
 	fi
-	@sudo docker login ${DOCKER_HUP_SERVER} --username ${DOCKER_HUP_USERNAME} --password ${DOCKER_HUP_PASSWORD}
+	@docker login ${DOCKER_HUP_SERVER} --username ${DOCKER_HUP_USERNAME} --password ${DOCKER_HUP_PASSWORD}
 	# 循环处理每个镜像
-	@sudo for old_img in $(OLD_IMAGES); do \
+	@for old_img in $(OLD_IMAGES); do \
     		echo "开始处理镜像: $$old_img"; \
     		\
     		# 拉取原始镜像 \
